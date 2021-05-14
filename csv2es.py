@@ -193,11 +193,11 @@ def cli(index_name, delete_index, mapping_file, doc_type, import_file,
         except ElasticHttpNotFoundError:
             echo('Index ' + index_name + ' not found, nothing to delete', quiet)
 
-    try:
-        es.create_index(index_name)
-        echo('Created new index: ' + index_name, quiet)
-    except IndexAlreadyExistsError:
-        echo('Index ' + index_name + ' already exists', quiet)
+    #try:
+    #    es.create_index(index_name)
+    #    echo('Created new index: ' + index_name, quiet)
+    #except IndexAlreadyExistsError:
+    #    echo('Index ' + index_name + ' already exists', quiet)
 
     echo('Using document type: ' + doc_type, quiet)
     if mapping_file:
