@@ -156,6 +156,7 @@ def sanitize_delimiter(delimiter, is_tab):
               help='Assume tab-separated, overrides delimiter')
 @click.option('--host', default='http://127.0.0.1:9200/', required=False,
               help='The Elasticsearch host (http://127.0.0.1:9200/)')
+@click.option('--auth', required=False, help='Elasticsearch basic authentication in the form of username:password.')
 @click.option('--docs-per-chunk', default=5000, required=False,
               help='The documents per chunk to upload (5000)')
 @click.option('--bytes-per-chunk', default=100000, required=False,
@@ -186,7 +187,7 @@ def cli(index_name, delete_index, mapping_file, doc_type, import_file,
     """
 
     echo('Using host: ' + host, quiet)
-    es = ElasticSearch(host)
+    es = ElasticSearch(host,http_auth=auth)
 
     if delete_index:
         try:
