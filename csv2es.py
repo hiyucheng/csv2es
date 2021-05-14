@@ -54,7 +54,7 @@ def documents_from_file(es, filename, delimiter, quiet):
     def all_docs():
         with open(filename, 'rb') if filename != '-' else sys.stdin as doc_file:
             # delimited file should include the field names as the first row
-            fieldnames = doc_file.next().strip().split(delimiter)
+            fieldnames = fields.strip().split(',')
             echo('Using the following ' + str(len(fieldnames)) + ' fields:', quiet)
             for fieldname in fieldnames:
                 echo(fieldname, quiet)
@@ -146,6 +146,8 @@ def sanitize_delimiter(delimiter, is_tab):
               help='The document type (like user_records)')
 @click.option('--import-file', required=True,
               help='File to import (or \'-\' for stdin)    ')
+@click.option('--fields', required=True,
+              help='fields name for index')
 @click.option('--mapping-file', required=False,
               help='JSON mapping file for index')
 @click.option('--delimiter', required=False,
