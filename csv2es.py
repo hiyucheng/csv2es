@@ -156,7 +156,8 @@ def sanitize_delimiter(delimiter, is_tab):
               help='Assume tab-separated, overrides delimiter')
 @click.option('--host', default='http://127.0.0.1:9200/', required=False,
               help='The Elasticsearch host (http://127.0.0.1:9200/)')
-@click.option('--auth', required=False, help='Elasticsearch basic authentication in the form of username:password.')
+@click.option('--auth-user', required=False, help='Elasticsearch basic authentication in the form of username.')
+@click.option('--auth-pass', required=False, help='Elasticsearch basic authentication in the form of password.')
 @click.option('--docs-per-chunk', default=5000, required=False,
               help='The documents per chunk to upload (5000)')
 @click.option('--bytes-per-chunk', default=100000, required=False,
@@ -169,7 +170,7 @@ def sanitize_delimiter(delimiter, is_tab):
               help='Minimize console output')
 @click.version_option(version=__version__, )
 def cli(index_name, delete_index, mapping_file, index_fields, doc_type, import_file,
-        delimiter, tab, host, auth, docs_per_chunk, bytes_per_chunk, parallel, quiet):
+        delimiter, tab, host, auth_user, auth_pass, docs_per_chunk, bytes_per_chunk, parallel, quiet):
     """
     Bulk import a delimited file into a target Elasticsearch instance. Common
     delimited files include things like CSV and TSV.
@@ -187,6 +188,7 @@ def cli(index_name, delete_index, mapping_file, index_fields, doc_type, import_f
     """
 
     echo('Using host: ' + host, quiet)
+    http_auth = (auth_user, auth_pass) if auth_user is Not None else None
     es = ElasticSearch(host,http_auth=auth)
 
     if delete_index:
