@@ -188,7 +188,7 @@ def cli(index_name, delete_index, mapping_file, index_fields, doc_type, import_f
     """
 
     echo('Using host: ' + host, quiet)
-    http_auth = (auth_user, auth_pass) if auth_user is Not None else None
+    http_auth = (auth_user, auth_pass) if auth_user is not None else None
     es = ElasticSearch(host,http_auth=auth)
 
     if delete_index:
